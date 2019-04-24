@@ -61,7 +61,40 @@ npm install compress-images --save-dev
 https://github.com/semiromid/compress-images/tree/master/example
 * Read the [Manual](https://github.com/semiromid/compress-images/blob/master/example/Manual.txt)
 
+### Example of EcmaScript 6
+```
+const ci = require('compress-images');
+const SOURCE = './img/**/*.{jpeg,jpg,png}';
+const OUTPUT = './dist/img/';
+const OPTIONS = {
+  conpress_force: false,
+  statistics: true,
+  autoupdate: true
+};
 
+//REQUIRED param
+const JPEG = { jpg: { engine: 'mozjpeg', command: ['-quality', '60'] } };
+//REQUIRED param
+const PNG = { png: { engine: 'pngquant', command: ['--quality=20-50'] } };
+//REQUIRED param
+const SVG = { svg: { engine: 'svgo', command: ['--multipass'] } };
+//REQUIRED param
+const GIF = { gif: { engine: 'gifsicle', command: ['--colors', '64', '--use-col=web'] } };
+ 
+(() => {
+    ci(
+      SOURCE,
+      OUTPUT,
+      OPTIONS,
+      false,
+      JPEG, PNG, SVG, GIF,
+      (err, ok, stats) => {
+        console.log('err :', err)
+        console.log('ok :', ok)
+      }
+    )
+})();
+```
 
 #### Example 1
 ```javascript
